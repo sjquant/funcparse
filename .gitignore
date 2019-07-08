@@ -1,0 +1,18 @@
+# virtualenv
+.virtualenv
+.venv
+venv
+
+# python cache
+__pycache__
+**.pyc
+.mypy_cache/**
+
+# vscode
+.vscode
+.vscode/**
+
+dist
+build
+funcparse
+funcparse.egg-info
