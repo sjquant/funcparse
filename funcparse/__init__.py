@@ -1,7 +1,8 @@
+from typing import Tuple
 import re
 
 
-def _parse_params(params: str, object_params: bool = False):
+def _parse_params(params: str) -> Tuple[tuple, dict]:
     if params == '' or params == '()':
         args: tuple = ()
         kwargs: dict = {}
@@ -20,15 +21,16 @@ def _parse_params(params: str, object_params: bool = False):
     return args, kwargs
 
 
-def parse(word, object_params=False):
+def parse(word: str) -> Tuple[str, tuple, dict]:
     regexp = r'(\w+)([\(]*.*[\)]*)$'
     match = re.search(regexp, word)
 
-    funcname = match.group(1)
-    params = match.group(2)
-    try:
-        args, kwargs = _parse_params(params, object_params)
-    except SyntaxError:
-        raise
+    if bool(match):
+        funcname = match.group(1)
+        params = match.group(2)
+    else:
+        raise SyntaxError("Cannot Parse")
+
+    args, kwargs = _parse_params(params)
 
     return funcname, args, kwargs
